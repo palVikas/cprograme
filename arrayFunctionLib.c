@@ -76,7 +76,6 @@ int* map_for_integer(int *array,int length,int (*function)(int,int,int*)){
 		return 0;
 	for(i=0;i<length;i++){
 		result[i]= (*function)(array[i],i,array);
-
 	}
 	return result;
 };

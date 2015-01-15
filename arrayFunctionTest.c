@@ -126,7 +126,7 @@ int map_function_for_quberoot(int a ,int index ,int *array){
 
 };
 
-void test_for_map_function_for_charecter(){
+void test_for_map_function_for_finding_cube_root(){
 	int (*function)(int,int,int*);
 	int array[] = {1,8,27,64,125,216};
 	int length = 6;
@@ -138,10 +138,23 @@ void test_for_map_function_for_charecter(){
 	assertEqual(p[2],3);
 	assertEqual(p[3],4);
 	assertEqual(p[4],5);
-
-	
-	
+};
 
 
+int map_function_adding_2(int a,int index,int *array){
+		return array[index] = a+2;
+};
 
-}
+void test_for_map_function_for_adding_2_in_each_element(){
+	int (*function)(int,int,int*);
+	int array[] = {5,7,13,56,34,23,65};
+	int length = 7;
+	int *p;
+	function = &map_function_adding_2;
+	p=map_for_integer(array,length,function);
+	assertEqual(p[0],7);
+	assertEqual(p[1],9);
+	assertEqual(p[2],15);
+	assertEqual(p[3],58);
+	assertEqual(p[4],36);
+};
