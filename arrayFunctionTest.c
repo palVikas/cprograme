@@ -121,8 +121,27 @@ void test_for_filter_function_for_charecter(){
 	assertEqual(result_array[1],'f');
 };
 
+int filter_function_for_string(char* a ,int index){
+	if(a[0]==104)
+		return 1;
+
+};
+
+void test_for_filter_function_for_string(){
+	int (*function) (char*,int) ;
+	int *result_array;
+	char *array[] ={"heloo","hiii","nahi","nahi"};
+	int length = 4;
+	function = &filter_function_for_string;
+	assertEqual(filter_for_string(array,length,function,&result_array), 1);
+	assertEqual(result_array[0], "heloo");
+	assertEqual(result_array[1], "hiii");
+
+
+}
+
 int map_function_for_quberoot(int a ,int index ,int *array){
-	       return  array[index] = cbrt(a);
+	    return  array[index] = cbrt(a);
 
 };
 
@@ -158,3 +177,21 @@ void test_for_map_function_for_adding_2_in_each_element(){
 	assertEqual(p[3],58);
 	assertEqual(p[4],36);
 };
+
+int map_function_for_double(int a,int index,int *array){
+	return array[index] = a*2;
+};
+
+void test_for_map_function_for_get_double_for_element(){
+	int (*function)(int,int,int*);
+	int array[] = {5,7,13,56,34,23,65};
+	int length = 7;
+	int *p;
+	function = &map_function_for_double;
+	p=map_for_integer(array,length,function);
+	assertEqual(p[0],10);
+	assertEqual(p[1],14);
+	assertEqual(p[2],26);
+	assertEqual(p[3],112);
+};
+
