@@ -4,6 +4,7 @@
 #include <math.h>
 #include <string.h>
 #include "arrayFunction.h"
+#include <ctype.h>
 
 void forEach_function_for_integer(int a,int index,int *b){
 	 printf("integer=%d,index=%d\n", a, index);
@@ -85,10 +86,10 @@ int filter_function_for_prime_number(int a,int index){
 			count++;
 			
 		}
-		if(count == 0)
-			return 1;
+	if(count == 0)
+		return 1;
 	}
-
+	return 0;
 };
 
 void test_filter_function_gives_all_prime_number(){
@@ -105,10 +106,9 @@ void test_filter_function_gives_all_prime_number(){
 };
 
 int filter_function_for_charecter(char a,int index){
-		if(a > 100)
-		return 1;
-	 	
+		return (a > 100);	 	
 };
+
 
 void test_for_filter_function_for_charecter(){
 	int *result_array;
@@ -121,28 +121,26 @@ void test_for_filter_function_for_charecter(){
 	assertEqual(result_array[1],'f');
 };
 
-int filter_function_for_string(char* a ,int index){
-	if(a[0]==104)
-		return 1;
-
+int filter_function_for_string(char *a ,int index){
+	return (a[0]==104) ? 1 :0;
 };
 
 void test_for_filter_function_for_string(){
 	int (*function) (char*,int) ;
-	int *result_array;
-	char *array[] ={"heloo","hiii","nahi","nahi"};
-	int length = 4;
+	char **result_array;
+	char *array[] ={"heloo","hiii","nahi","kabhi nii","hats"};
+	int length = 5,result;
 	function = &filter_function_for_string;
-	assertEqual(filter_for_string(array,length,function,&result_array), 1);
-	assertEqual(result_array[0], "heloo");
-	assertEqual(result_array[1], "hiii");
-
-
+	result = filter_for_string(array,length,function,&result_array);
+	assertEqual(result, 1);
+	assertEqual(strcmp("heloo",result_array[0]),0);
+	assertEqual(strcmp("hiii",result_array[1]),0);
+	assertEqual(strcmp("hats",result_array[2]),0);
+	assertEqual(strcmp("haus",result_array[2]),1);
 }
 
 int map_function_for_quberoot(int a ,int index ,int *array){
 	    return  array[index] = cbrt(a);
-
 };
 
 void test_for_map_function_for_finding_cube_root(){
@@ -195,3 +193,39 @@ void test_for_map_function_for_get_double_for_element(){
 	assertEqual(p[3],112);
 };
 
+int map_function_return_upper_charecter(char a,int index,char *array){
+		return array[index] = toupper(a);
+};
+
+void test_for_map_function_for_get_upper_charecter(){
+	int (*function)(char,int,char*);
+	char array[] = {'a','b','c','d','e'};
+	int length = 5;
+	char *p;
+	function = &map_function_return_upper_charecter;
+	p=map_for_charecter(array,length,function);
+	assertEqual(p[0],'A');
+	assertEqual(p[1],'B');
+	assertEqual(p[2],'C');
+	assertEqual(p[3],'D');
+	assertEqual(p[4],'E');
+};
+
+int map_function_for_next_charecter(char a,int index,char *array){
+	return array[index] = a+2;
+}
+
+
+void test_for_map_function_for_get_next_charecter(){
+	int (*function)(char,int,char*);
+	char array[] = {'a','b','c','d','e'};
+	int length = 5;
+	char *p;
+	function = &map_function_for_next_charecter;
+	p=map_for_charecter(array,length,function);
+	assertEqual(p[0],'c');
+	assertEqual(p[1],'d');
+	assertEqual(p[2],'e');
+	assertEqual(p[3],'f');
+	assertEqual(p[4],'g');
+};
