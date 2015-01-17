@@ -103,7 +103,26 @@ void test_filter_function_gives_all_prime_number(){
 	assertEqual(result_array[1],7);
 	assertEqual(result_array[2],13);
 	assertEqual(result_array[3],11);
+	free(result_array);
 };
+
+// int filter_function_for_float(float a,int index){
+
+// }
+
+// void test_for_filer_function_for_float(){
+// 	int *result_array;
+// 	int (*function) (float , int );
+// 	int array[] = {4.6,3.8,6.2,7.9,13.70};
+// 	int length = 6;
+// 	function = &filter_function_for_float;
+// 	assertEqual(filter_for_integer(array,length,function,&result_array), 1);
+// 	assertEqual(result_array[0],3);
+// 	assertEqual(result_array[1],7);
+// 	assertEqual(result_array[2],13);
+// 	assertEqual(result_array[3],11);
+// 	free(result_array);
+// };
 
 int filter_function_for_charecter(char a,int index){
 		return (a > 100);	 	
@@ -119,6 +138,7 @@ void test_for_filter_function_for_charecter(){
 	assertEqual(filter_for_charecter(array,length,function,&result_array), 1);
 	assertEqual(result_array[0],'e');
 	assertEqual(result_array[1],'f');
+	free(result_array);
 };
 
 int filter_function_for_string(char *a ,int index){
@@ -193,12 +213,13 @@ void test_for_map_function_for_get_double_for_element(){
 	assertEqual(p[3],112);
 };
 
-int map_function_return_upper_charecter(char a,int index,char *array){
+
+char map_function_return_upper_charecter(char a,int index,char *array){
 		return array[index] = toupper(a);
 };
 
 void test_for_map_function_for_get_upper_charecter(){
-	int (*function)(char,int,char*);
+	char (*function)(char,int,char*);
 	char array[] = {'a','b','c','d','e'};
 	int length = 5;
 	char *p;
@@ -211,13 +232,13 @@ void test_for_map_function_for_get_upper_charecter(){
 	assertEqual(p[4],'E');
 };
 
-int map_function_for_next_charecter(char a,int index,char *array){
+char map_function_for_next_charecter(char a,int index,char *array){
 	return array[index] = a+2;
 }
 
 
 void test_for_map_function_for_get_next_charecter(){
-	int (*function)(char,int,char*);
+	char (*function)(char,int,char*);
 	char array[] = {'a','b','c','d','e'};
 	int length = 5;
 	char *p;
@@ -228,4 +249,118 @@ void test_for_map_function_for_get_next_charecter(){
 	assertEqual(p[2],'e');
 	assertEqual(p[3],'f');
 	assertEqual(p[4],'g');
+};
+
+char* map_function_for_string(char *a,int index,char **array){
+		return a;
+}
+
+void test_for_map_function_for_string(){
+	char *array[]={"vikas","vijay","ajay"};
+	char* (*function)(char*,int,char**);
+	int length =3;
+	char **p;
+	function = &map_function_for_string;
+	p=map_for_string(array,length,function);
+	assertEqual(strcmp("vikas",p[0]),0);
+	assertEqual(strcmp("vijay",p[1]),0);
+	assertEqual(strcmp("ajay",p[2]),0);
+	assertEqual(strcmp("vimas",p[0]),2);
+
+
+}
+
+
+
+
+int reduce_function(int cv,int initial_value,int index,int *array){
+	return cv+initial_value;
+};
+
+void test_for_reduce_function_for_adding_cv_and_pv_value(){
+	int (*function)(int,int,int,int*);
+	int array[] = {5,7,13,56,34,23,65};
+	int length = 7;
+	int initial_value=0;
+	int p;
+	function = &reduce_function;
+	p=reduce_for_integer(array,length,initial_value,function);
+	assertEqual(p,203);
+	
+};
+
+int reduce_function_for_big_number(int cv,int initial_value,int index,int *array){
+		if(initial_value > cv)
+			return initial_value;
+		return cv;
+}
+
+void test_for_reduce_function_for_given_big_number_in_array(){
+	int (*function)(int,int,int,int*);
+	int array[] = {5,71,103,13,56,34,23,65,67,23,90};
+	int length = 7;
+	int initial_value=45;
+	int p;
+	function = &reduce_function_for_big_number;
+	p=reduce_for_integer(array,length,initial_value,function);
+	assertEqual(p,103);
+	
+};
+
+char reduce_function_for_charecter(char a,char initial_value,int index,char *array){
+			return a;
+};
+
+void test_for_reduce_function_for_charecter_cv_and_pv_value(){
+	char (*function)(char,char,int,char*);
+	char array[] = {'i','k','a','s'};
+	int length = 4;
+	char initial_value='v';
+	char p;
+	function = &reduce_function_for_charecter;
+	p=reduce_for_charecter(array,length,initial_value,function);
+	assertEqual(p,'s');
+};
+char reduce_function_to_find_big_charecter(char a,char initial_value,int index,char *array){
+		if(initial_value > a)
+			return initial_value;
+		return a;
+}
+
+void test_for_reduce_function_for_charecter_to_give_big_charecter(){
+	char (*function)(char,char,int,char*);
+	char array[] = {'i','k','a','s','m','z','s','q'};
+	int length = 8;
+	char initial_value='e';
+	char p;
+	function = &reduce_function_to_find_big_charecter;
+	p=reduce_for_charecter(array,length,initial_value,function);
+	assertEqual(p,'z');
+};
+
+char* reduce_function_to_find_big_string(char* a,char* initial_value,int index,char** array){
+		return (strlen(initial_value)> strlen(a)) ? initial_value : a;
+}
+
+void test_for_reduce_function_for_string_return_big_string(){
+	char *array[] = {"heloo","syamlal","khurana","jalandharwale"};
+	int length = 4;
+	char *initial_value="nahii";
+	char *p;
+	p=reduce_for_string(array,length,initial_value,reduce_function_to_find_big_string);
+	assertEqual(strcmp("jalandharwale",p),0);
+};
+
+char* reduce_function_to_find_small_string(char* a,char* initial_value,int index,char** array){
+	return (strlen(initial_value)> strlen(a)) ? a : initial_value;
+}
+
+void test_for_reduce_function_for_string_return_small_string(){
+	char *array[] = {"helo","syamlal","khurana","jalandharwale"};
+	int length = 4;
+	char *initial_value="nahii";
+	char *p;
+	p=reduce_for_string(array,length,initial_value,reduce_function_to_find_small_string);
+	assertEqual(strcmp("helo",p),0);
+	
 };
